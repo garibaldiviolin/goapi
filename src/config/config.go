@@ -17,7 +17,7 @@ func GetConfig() *Config {
         DB: &DBConfig{
             Dialect:  "postgres",
             Username: "postgres",
-            Password: "postgres",
+            Password: "docker",
             Name:     "employee",
             Charset:  "utf8",
         },
