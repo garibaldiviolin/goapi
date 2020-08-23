@@ -31,6 +31,8 @@ func (a *App) Initialize(config *config.Config) {
         log.Fatal(err)
         log.Fatal("Could not connect database")
     }
+    // db.LogMode(true)
+    db.DB().SetMaxOpenConns(10)
  
     a.DB = model.DBMigrate(db)
     a.Router = mux.NewRouter()
@@ -40,13 +42,13 @@ func (a *App) Initialize(config *config.Config) {
 // Set all required routers
 func (a *App) setRouters() {
     // Routing for handling the projects
-    a.Get("/employees", a.GetAllEmployees)
-    a.Post("/employees", a.CreateEmployee)
-    a.Get("/employees/{title}", a.GetEmployee)
-    a.Put("/employees/{title}", a.UpdateEmployee)
-    a.Delete("/employees/{title}", a.DeleteEmployee)
-    a.Put("/employees/{title}/disable", a.DisableEmployee)
-    a.Put("/employees/{title}/enable", a.EnableEmployee)
+    a.Get("/employees/", a.GetAllEmployees)
+    a.Post("/employees/", a.CreateEmployee)
+    a.Get("/employees/{name}/", a.GetEmployee)
+    a.Patch("/employees/{name}/", a.UpdateEmployee)
+    a.Delete("/employees/{name}/", a.DeleteEmployee)
+    a.Patch("/employees/{name}/disable/", a.DisableEmployee)
+    a.Patch("/employees/{name}/enable/", a.EnableEmployee)
 }
  
 // Wrap the router for GET method
@@ -59,9 +61,9 @@ func (a *App) Post(path string, f func(w http.ResponseWriter, r *http.Request)) 
     a.Router.HandleFunc(path, f).Methods("POST")
 }
  
-// Wrap the router for PUT method
-func (a *App) Put(path string, f func(w http.ResponseWriter, r *http.Request)) {
-    a.Router.HandleFunc(path, f).Methods("PUT")
+// Wrap the router for PATCH method
+func (a *App) Patch(path string, f func(w http.ResponseWriter, r *http.Request)) {
+    a.Router.HandleFunc(path, f).Methods("PATCH")
 }
  
 // Wrap the router for DELETE method

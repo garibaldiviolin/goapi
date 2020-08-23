@@ -7,7 +7,7 @@ import (
  
 type Employee struct {
     gorm.Model
-    Name   string `gorm:"unique" json:"name"`
+    Name   string `gorm:"unique_index" json:"name"`
     City   string `json:"city"`
     Age    int    `json:"age"`
     Status bool   `json:"status"`

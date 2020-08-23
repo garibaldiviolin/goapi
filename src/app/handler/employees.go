@@ -31,7 +31,7 @@ func CreateEmployee(db *gorm.DB, w http.ResponseWriter, r *http.Request) {
     }
     respondJSON(w, http.StatusCreated, employee)
 }
- 
+
 func GetEmployee(db *gorm.DB, w http.ResponseWriter, r *http.Request) {
     vars := mux.Vars(r)
  
@@ -74,7 +74,7 @@ func DeleteEmployee(db *gorm.DB, w http.ResponseWriter, r *http.Request) {
     if employee == nil {
         return
     }
-    if err := db.Delete(&employee).Error; err != nil {
+    if err := db.Unscoped().Delete(&employee).Error; err != nil {
         respondError(w, http.StatusInternalServerError, err.Error())
         return
     }
