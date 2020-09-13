@@ -32,7 +32,7 @@ func (a *App) Initialize(config *config.Config) {
         log.Fatal("Could not connect database")
     }
     // db.LogMode(true)
-    db.DB().SetMaxOpenConns(10)
+    db.DB().SetMaxOpenConns(90)
  
     a.DB = model.DBMigrate(db)
     a.Router = mux.NewRouter()
