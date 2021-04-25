@@ -10,6 +10,7 @@ type Config struct {
 }
  
 type DBConfig struct {
+    Host     string
     Dialect  string
     Username string
     Password string
@@ -23,6 +24,7 @@ func GetConfig() *Config {
     return &Config{
         DB: &DBConfig{
             Dialect:  "postgres",
+            Host:     os.Getenv("DATABASE_HOST"),
             Username: os.Getenv("DATABASE_USERNAME"),
             Password: os.Getenv("DATABASE_PASSWORD"),
             Name:     os.Getenv("DATABASE_NAME"),
