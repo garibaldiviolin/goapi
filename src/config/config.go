@@ -1,4 +1,9 @@
 package config
+
+import (
+	"github.com/joho/godotenv"
+	"os"
+)
  
 type Config struct {
     DB *DBConfig
@@ -13,12 +18,14 @@ type DBConfig struct {
 }
  
 func GetConfig() *Config {
+    godotenv.Load()
+
     return &Config{
         DB: &DBConfig{
             Dialect:  "postgres",
-            Username: "postgres",
-            Password: "docker",
-            Name:     "employee",
+            Username: os.Getenv("DATABASE_USERNAME"),
+            Password: os.Getenv("DATABASE_PASSWORD"),
+            Name:     os.Getenv("DATABASE_NAME"),
             Charset:  "utf8",
         },
     }
